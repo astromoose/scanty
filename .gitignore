@@ -1,2 +1,6 @@
-*.log
-blog.db
+.sass-cache
+nohup.out
+start
+*.swp
+*.orig
+*.db

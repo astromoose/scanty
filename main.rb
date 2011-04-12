@@ -1,21 +1,27 @@
+$: << File.expand_path(File.dirname(__FILE__))
+
 require 'rubygems'
-require 'sinatra'
+require 'sinatra/base'
+require 'haml'
+require 'awesome_print'
 
 $LOAD_PATH.unshift File.dirname(__FILE__) + '/vendor/sequel'
 require 'sequel'
+
+class Scanty < Sinatra::Base
 
 configure do
 	Sequel.connect(ENV['DATABASE_URL'] || 'sqlite://blog.db')
 
 	require 'ostruct'
 	Blog = OpenStruct.new(
-		:title => 'a scanty blog',
-		:author => 'John Doe',
-		:url_base => 'http://localhost:4567/',
-		:admin_password => 'changeme',
-		:admin_cookie_key => 'scanty_admin',
-		:admin_cookie_value => '51d6d976913ace58',
-		:disqus_shortname => nil
+		:title => 'tales of an astromoose',
+		:author => 'Jon Anning',
+		:url_base => 'http://astromoose.info/',
+		:admin_password => 'h3avy4rm',
+		:admin_cookie_key => 'astro_admin',
+		:admin_cookie_value => 'asdhakefhakjsdhfksajdfh',
+		:disqus_shortname => 'astromoose'
 	)
 end
 
@@ -44,8 +50,8 @@ layout 'layout'
 ### Public
 
 get '/' do
-	posts = Post.reverse_order(:created_at).limit(10)
-	erb :index, :locals => { :posts => posts }, :layout => false
+	@posts = Post.reverse_order(:created_at).limit(10)
+	haml :index
 end
 
 get '/past/:year/:month/:day/:slug/' do
@@ -89,7 +95,8 @@ get '/auth' do
 end
 
 post '/auth' do
-	set_cookie(Blog.admin_cookie_key, Blog.admin_cookie_value) if params[:password] == Blog.admin_password
+        response.set_cookie(Blog.admin_cookie_key, Blog.admin_cookie_value) if params[:password] == Blog.admin_password
+#	set_cookie(Blog.admin_cookie_key, Blog.admin_cookie_value) if params[:password] == Blog.admin_password
 	redirect '/'
 end
 
@@ -123,3 +130,4 @@ post '/past/:year/:month/:day/:slug/' do
 	redirect post.url
 end
 
+end
