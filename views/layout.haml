@@ -1,0 +1,15 @@
+!!!
+%html
+  %head	
+    %title= @title || Blog.title
+    %link{:rel => 'stylesheet', :href => '/stylesheets/main.css', :type => "text/css"}
+  %body
+    .header
+      .logo2
+        %h1= Blog.title
+        %p= "by " + Blog.author 
+    .content
+      = yield
+    .footer
+      %p.legal 
+        Code forked from <a href="https://github.com/adamwiggins/scanty/">Scanty</a> | uses <a href="http://haml-lang.com/">haml</a>, <a href="http://sass-lang.com/">sass</a>, <a href='http://www.sinatrarb.com/'>sinatra</a>
