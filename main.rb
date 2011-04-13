@@ -18,10 +18,10 @@ configure do
 		:title => 'tales of an astromoose',
 		:author => 'Jon Anning',
 		:url_base => 'http://astromoose.info/',
-		:admin_password => 'BUGGEROFF',
-		:admin_cookie_key => 'xooooooooom',
-		:admin_cookie_value => 'cookie goes here',
-		:disqus_shortname => 'diqsuis'
+		:admin_password => 'passwordhere',
+		:admin_cookie_key => 'cookiecookie',
+		:admin_cookie_value => 'cookiecookiecookie',
+		:disqus_shortname => 'diqsus'
 	)
 end
 
